@@ -6,7 +6,7 @@ MACAD 2026 · Module 03: Graph Machine Learning · Phase 01 & 02
 
 ## Overview
 
-This project translates the Police Station in Salt, Jordan into a series of mathematical graphs using `topologicpy`. The goal is to move beyond standard 3D modeling and make the building's spatial logic computable — encoding security hierarchy, physical access, and visual control as graph structures that can be queried and analyzed.
+This project translates the Police Station in Salt, Spain into a series of mathematical graphs using `topologicpy`. The goal is to move beyond standard 3D modeling and make the building's spatial logic computable — encoding security hierarchy, physical access, and visual control as graph structures that can be queried and analyzed.
 
 Three graphs are produced, each answering a distinct spatial question:
 1. **Primal Graph** — which rooms are geometrically adjacent?
