@@ -26,14 +26,32 @@ This makes it an ideal subject for graph analysis. The gap between geometric adj
 ## Project Structure
 
 ```
-assets/
-├── ROOMS-GEO.obj        # Extruded room volumes from Rhino
-├── DOORS-GEO.obj        # Solid door apertures
-├── GLASS-DOORS-GEO.obj  # Glass door apertures
-└── WINDOWS-GEO.obj      # Window apertures
-
-gml-assign-01.ipynb      # Main analysis notebook
-README.md
+aia-gml/
+├── README.md
+├── general-assets/                          # Source Rhino model & reference plans
+│   └── police-station-salt-jfb.3dm
+│
+├── 01-graphs-generation/                    # Assignment 01 — Graph construction
+│   ├── assets/
+│   │   ├── ROOMS-GEO.obj                    # Extruded room volumes from Rhino
+│   │   ├── DOORS-GEO.obj                    # Solid door apertures
+│   │   ├── GLASS-DOORS-GEO.obj              # Glass door apertures
+│   │   └── WINDOWS-GEO.obj                  # Window apertures
+│   ├── notebooks/
+│   │   └── graph-gen.ipynb                  # Main graph-generation notebook
+│   ├── plots/                               # Exported graph visualisations
+│   └── pdf/                                 # Presentation PDF
+│
+└── 02-graph-analysis/                       # Assignment 02 — Spatial intelligence
+    ├── assets/
+    │   ├── gf-floor-plan.obj                # Ground-floor plan mesh
+    │   ├── gf-floor-plan.brep               # Exported by obj-to-brep.ipynb
+    │   └── gf-floor-plan_face.brep          # Single-face BREP used by analysis notebooks
+    └── notebooks/
+        ├── obj-to-brep.ipynb                # Step 0: convert OBJ → BREP
+        ├── si-centrality.ipynb              # Closeness & Betweenness centrality
+        ├── si-community.ipynb               # Community detection & Degree centrality
+        └── si-isovist.ipynb                 # Isovist-based visibility analysis
 ```
 
 ---
@@ -41,7 +59,7 @@ README.md
 ## Requirements
 
 ```
-topologicpy >= 0.9.18
+topologicpy >= 0.9.31
 ```
 
 Run in VS Code, Jupyter, or Google Colab. Set the renderer at the top of the notebook:
@@ -74,7 +92,7 @@ The gradient within `public` and `private` categories is computed with a linear 
 
 ### Cell 01 — Load Geometry
 ```python
-objects = Topology.ByOBJPath("ROOMS-GEO.obj")
+objects = Topology.ByOBJPath("../assets/ROOMS-GEO.obj")
 ```
 Imports the OBJ as a list of `Cluster` topology objects. Each object carries a dictionary with its Rhino layer-based `name`.
 
