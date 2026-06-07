@@ -1,6 +1,6 @@
 # Spatial Syntax of the Salt Police Station
 **Computational Graph Analysis using TopologicPy**
-MACAD 2026 · Module 03: Graph Machine Learning · Phase 01 & 02
+MACAD 2026 · Module 03: Graph Machine Learning · Phase 01, 02 & 03
 
 ---
 
@@ -47,16 +47,36 @@ aia-gml/
 │   └── pdf/
 │       └── ps-phase-01-presentation.pdf    # Phase 01 presentation
 │
-└── phase-02-spatial-analysis/              # Phase 02 — Spatial Analysis
+├── phase-02-spatial-analysis/              # Phase 02 — Spatial Analysis
+│   ├── assets/
+│   │   ├── gf-floor-plan.obj                # Ground-floor plan mesh
+│   │   ├── gf-floor-plan.brep               # Raw BREP — exported by obj-to-brep.ipynb
+│   │   └── gf-floor-plan-face.brep          # Single-face BREP — used by si notebooks
+│   └── notebooks/
+│       ├── obj-to-brep.ipynb                # Step 0: convert OBJ → BREP
+│       ├── si-centrality.ipynb              # Closeness & Betweenness centrality
+│       ├── si-community.ipynb               # Community detection & Degree centrality
+│       └── si-isovist.ipynb                 # Isovist-based visibility analysis
+│
+└── phase-03-building-graph-representation/  # Phase 03 — Building Graph Representation
     ├── assets/
-    │   ├── gf-floor-plan.obj                # Ground-floor plan mesh
-    │   ├── gf-floor-plan.brep               # Raw BREP — exported by obj-to-brep.ipynb
-    │   └── gf-floor-plan-face.brep          # Single-face BREP — used by si notebooks
-    └── notebooks/
-        ├── obj-to-brep.ipynb                # Step 0: convert OBJ → BREP
-        ├── si-centrality.ipynb              # Closeness & Betweenness centrality
-        ├── si-community.ipynb               # Community detection & Degree centrality
-        └── si-isovist.ipynb                 # Isovist-based visibility analysis
+    │   ├── ground.obj · columns.obj · offices.obj · core.obj · plinth.obj
+    │   ├── LeverHouse.3dm                   # Source Rhino model (Lever House)
+    │   ├── bgr_dataset/                     # Exported graph CSVs — the Lever House graph
+    │   ├── dataset_graph_classification/    # Training dataset — labelled massing typologies
+    │   ├── bgr_model.pt                     # Pre-trained classifier (used for prediction)
+    │   └── pyg_model.pt                     # Model trained in notebook 00
+    ├── notebooks/
+    │   ├── 00-graph-classification.ipynb    # Train the GraphSAGE graph classifier
+    │   ├── 01-create-bgr-graph.ipynb        # Build the Lever House graph from OBJs
+    │   └── 02-predict-bgr-graph.ipynb       # Predict the building–ground relationship
+    ├── plots/
+    │   ├── lh-cell-complex.png              # Merged cell complex
+    │   ├── lh-cells-colored.png             # Cells colored by element type
+    │   ├── lh-adjacency-graph.png           # Adjacency graph
+    │   └── lh-prediction-result.png         # Classification result
+    └── pdf/
+        └── lh-phase-03-presentation.pdf     # Phase 03 presentation
 ```
 
 ---
@@ -75,7 +95,7 @@ All files and folders in this repo follow a single consistent convention:
 | PDFs | `ps-phase-XX-descriptor.pdf` | `ps-phase-01-presentation.pdf` |
 | Generated files | `descriptor-type.ext` | `gf-floor-plan-face.brep` |
 
-`ps` = police station · `gf` = ground floor · `si` = spatial intelligence
+`ps` = police station · `gf` = ground floor · `si` = spatial intelligence · `lh` = lever house · `bgr` = building graph representation
 
 ---
 
