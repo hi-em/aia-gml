@@ -1,6 +1,16 @@
-# Spatial Syntax of the Salt Police Station
-**Computational Graph Analysis using TopologicPy**
-MACAD 2026 · Module 03: Graph Machine Learning · Phase 01, 02 & 03
+# Spatial graph analysis
+
+**Buildings read as graphs: adjacency, access, sightlines, and a classifier over the massing.**
+TopologicPy throughout, with graph learning through its `PyG` module (PyTorch Geometric).
+MaCAD 2026, Module 03: Graph Machine Learning, phases 01 to 03. By Emilie El Chidiac.
+
+Three phases, three questions:
+
+| Phase | Subject | Question |
+|---|---|---|
+| 01 · graph generation | police station, Salt, Spain | can a building's security logic be made computable? |
+| 02 · spatial analysis | the same ground floor | where are the chokepoints, the communities, the blind spots? |
+| 03 · building graph representation | Lever House, New York | can a trained classifier read a massing's relationship to the ground? |
 
 ---
 
@@ -26,7 +36,7 @@ This makes it an ideal subject for graph analysis. The gap between geometric adj
 ## Project Structure
 
 ```
-aia-gml/
+spatial-graph-analysis/
 ├── README.md
 ├── reference/                               # Source Rhino model & reference plans
 │   └── police-station-salt-jfb.3dm
@@ -281,3 +291,44 @@ Glass doors appear in both graphs: they allow passage (movement graph) and sight
 | Graph from topology | `Graph.ByTopology` | Core graph construction |
 | Aperture attachment | `Topology.AddApertures` | Links doors/windows to wall faces |
 | Node connectivity count | `Graph.VertexDegree` | Drives degree-based node sizing |
+
+---
+
+## What is mine and what came with the course
+
+Worth stating plainly, because a graph-ML repo can easily imply more authorship than it has.
+
+Solo work, all three phases.
+
+- **Mine:** the case study choice and the argument for it, the Rhino modelling and export, all
+  graph construction, the classification scheme, every analysis notebook, the plots and the
+  three presentations.
+- **Course provided:** the Lever House Rhino model, the labelled massing-typology training set
+  in `dataset_graph_classification/`, and the pretrained classifier `bgr_model.pt` used for
+  prediction in phase 03. Notebook `00-graph-classification.ipynb` trains a GraphSAGE model on
+  that provided dataset; it is applied machine learning on someone else's data, not a model I
+  designed.
+- **Reference material, not mine:** the police station in Salt, Spain is a real building by
+  another practice. Its model and plans in `reference/` came with the course and are here so the
+  analysis is reproducible. They are reference for academic study, not work of mine, and not
+  offered for reuse. Every notebook reads the derived OBJ exports rather than the source model.
+
+## Honest notes
+
+- **Room classification is a keyword match on Rhino layer names.** `lobby`, `cell`,
+  `circulation` and so on, with a fallback to `private`. It works, and it is also the weakest
+  link in the whole pipeline: the analysis silently inherits the modeller's naming discipline,
+  and one badly named layer moves a room into the wrong zone with no error. A robust version
+  would classify on geometry and connectivity instead of on strings. That is a real limitation,
+  not a to-do I am pretending is small.
+- **Node placement had to move off the centroid.** `Graph.ByTopology` with a centroid places
+  nodes outside non-convex rooms, which looks like a rendering glitch and is actually wrong
+  data. `useInternalVertex=True` fixes it. You find this by noticing nodes floating outside the
+  building.
+- **Colouring needed two passes, not one.** A gradient across a category cannot be assigned
+  until the category's total count is known, so classification and colouring are separate loops.
+  Obvious in hindsight, not while writing it.
+- **The interesting result is a gap, not a number.** The primal graph and the movement graph
+  differ exactly where the architects put a barrier. The security design lives in the
+  difference between the two, which is why both are built rather than just the useful one.
+- **The `Future Analyses` table above is honest.** Those analyses are designed and not run.
